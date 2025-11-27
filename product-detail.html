@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détail Produit - SINJ3</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .product-detail-page {
+            padding-top: 130px;
+            min-height: 100vh;
+        }
+        
+        .page-header-mini {
+            background: var(--bg-secondary);
+            padding: var(--spacing-lg) 0;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 0.9375rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--primary-color);
+        }
+        
+        .breadcrumb span {
+            color: var(--text-light);
+        }
+        
+        .breadcrumb .current {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-3xl);
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        /* Product Gallery */
+        .product-gallery {
+            position: sticky;
+            top: 150px;
+            height: fit-content;
+        }
+        
+        .gallery-main {
+            position: relative;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--spacing-lg);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gallery-main i {
+            font-size: 10rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+        }
+        
+        .gallery-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: var(--radius-sm);
+            color: white;
+        }
+        
+        .badge-new {
+            background: var(--accent-color);
+        }
+        
+        .badge-sale {
+            background: var(--error-color);
+        }
+        
+        .badge-hot {
+            background: var(--secondary-color);
+        }
+        
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 45px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-fast);
+            cursor: pointer;
+        }
+        
+        .gallery-nav:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .gallery-nav.prev {
+            left: 20px;
+        }
+        
+        .gallery-nav.next {
+            right: 20px;
+        }
+        
+        .gallery-thumbnails {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        .gallery-thumb {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .gallery-thumb.active,
+        .gallery-thumb:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .gallery-thumb i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            opacity: 0.5;
+        }
+        
+        /* Product Info */
+        .product-info-detail {
+            padding-top: var(--spacing-md);
+        }
+        
+        .product-category-detail {
+            font-size: 0.875rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .product-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.2;
+        }
+        
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-xl);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .product-rating-detail {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .product-rating-detail .stars i {
+            color: var(--secondary-color);
+        }
+        
+        .product-rating-detail span {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+        }
+        
+        .product-stock {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+        
+        .product-stock i {
+            font-size: 0.75rem;
+        }
+        
+        .product-price-detail {
+            display: flex;
+            align-items: baseline;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .price-current {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .price-original {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+        
+        .price-discount {
+            background: var(--error-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .product-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        /* Product Options */
+        .product-options {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .option-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .option-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .option-label span {
+            font-weight: 500;
+        }
+        
+        .option-label a {
+            color: var(--primary-color);
+            font-size: 0.875rem;
+        }
+        
+        .size-options,
+        .color-options {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+        
+        .size-option {
+            min-width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .size-option:hover,
+        .size-option.selected {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .color-option {
+            width: 45px;
+            height: 45px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            border: 3px solid transparent;
+            position: relative;
+            transition: var(--transition-fast);
+        }
+        
+        .color-option:hover,
+        .color-option.selected {
+            border-color: var(--primary-color);
+        }
+        
+        .color-option.selected::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 0.875rem;
+        }
+        
+        /* Quantity & Add to Cart */
+        .product-actions-detail {
+            display: flex;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        
+        .quantity-selector button {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            transition: var(--transition-fast);
+        }
+        
+        .quantity-selector button:hover {
+            background: var(--bg-secondary);
+            color: var(--primary-color);
+        }
+        
+        .quantity-selector input {
+            width: 60px;
+            height: 50px;
+            text-align: center;
+            border: none;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+        
+        .add-to-cart-detail {
+            flex: 1;
+        }
+        
+        .secondary-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-xl);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .secondary-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: var(--transition-fast);
+        }
+        
+        .secondary-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        /* Product Features */
+        .product-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-lg);
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .feature-item i {
+            width: 45px;
+            height: 45px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+        }
+        
+        .feature-item span {
+            font-size: 0.9375rem;
+            font-weight: 500;
+        }
+        
+        /* Product Tabs */
+        .product-tabs-section {
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .tab-btn-detail {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: var(--transition-fast);
+        }
+        
+        .tab-btn-detail:hover {
+            color: var(--primary-color);
+        }
+        
+        .tab-btn-detail.active {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tab-content h3 {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .tab-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tab-content ul {
+            list-style: disc;
+            padding-left: var(--spacing-xl);
+            color: var(--text-secondary);
+            line-height: 2;
+        }
+        
+        /* Reviews */
+        .reviews-summary {
+            display: flex;
+            gap: var(--spacing-3xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .rating-overview {
+            text-align: center;
+        }
+        
+        .rating-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+        
+        .rating-stars {
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .rating-stars i {
+            color: var(--secondary-color);
+            font-size: 1.25rem;
+        }
+        
+        .rating-count {
+            color: var(--text-secondary);
+        }
+        
+        .rating-bars {
+            flex: 1;
+        }
+        
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .rating-bar span {
+            width: 80px;
+            font-size: 0.875rem;
+        }
+        
+        .bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            background: var(--secondary-color);
+            border-radius: var(--radius-full);
+        }
+        
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+        }
+        
+        .review-item {
+            padding: var(--spacing-xl);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .review-author h4 {
+            font-size: 1rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .review-date {
+            font-size: 0.8125rem;
+            color: var(--text-light);
+        }
+        
+        .review-rating i {
+            color: var(--secondary-color);
+        }
+        
+        .review-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        
+        /* Related Products */
+        .related-section {
+            padding: var(--spacing-3xl) 0;
+            background: var(--bg-secondary);
+        }
+        
+        @media (max-width: 992px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-gallery {
+                position: static;
+            }
+            
+            .product-title {
+                font-size: 2rem;
+            }
+            
+            .price-current {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .product-actions-detail {
+                flex-direction: column;
+            }
+            
+            .quantity-selector {
+                justify-content: center;
+            }
+            
+            .product-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .reviews-summary {
+                flex-direction: column;
+            }
+            
+            .secondary-actions {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="top-bar-content">
+                    <div class="contact-info">
+                        <span><i class="fas fa-phone"></i> +33 1 23 45 67 89</span>
+                        <span><i class="fas fa-envelope"></i> contact@sinj3.fr</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <a href="index.html" class="logo">
+                        <span class="logo-text">SINJ<span class="logo-accent">3</span></span>
+                    </a>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="products.html">Produits</a></li>
+                        <li><a href="about.html">À Propos</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                    <div class="nav-actions">
+                        <a href="#" class="nav-icon" id="wishlist-btn">
+                            <i class="fas fa-heart"></i>
+                            <span class="badge">0</span>
+                        </a>
+                        <a href="cart.html" class="nav-icon" id="cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge" id="cart-count">0</span>
+                        </a>
+                    </div>
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="product-detail-page">
+        <!-- Breadcrumb -->
+        <div class="page-header-mini">
+            <div class="container">
+                <nav class="breadcrumb">
+                    <a href="index.html">Accueil</a>
+                    <span>/</span>
+                    <a href="products.html">Produits</a>
+                    <span>/</span>
+                    <span class="current" id="breadcrumb-product">Chargement...</span>
+                </nav>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Product Detail -->
+            <div class="product-detail" id="product-detail">
+                <!-- Content will be loaded dynamically -->
+            </div>
+
+            <!-- Product Tabs -->
+            <section class="product-tabs-section">
+                <div class="tabs-header">
+                    <button class="tab-btn-detail active" data-tab="description">Description</button>
+                    <button class="tab-btn-detail" data-tab="details">Détails</button>
+                    <button class="tab-btn-detail" data-tab="reviews">Avis (0)</button>
+                </div>
+                <div class="tab-content active" id="tab-description">
+                    <h3>À propos de ce produit</h3>
+                    <p id="product-long-description">Chargement...</p>
+                </div>
+                <div class="tab-content" id="tab-details">
+                    <h3>Caractéristiques</h3>
+                    <ul id="product-details-list">
+                        <li>Matière : 100% coton de qualité supérieure</li>
+                        <li>Entretien : Lavage en machine à 30°C</li>
+                        <li>Coupe : Ajustée</li>
+                        <li>Origine : Fabriqué en Europe</li>
+                        <li>Certification : OEKO-TEX Standard 100</li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="tab-reviews">
+                    <div class="reviews-summary">
+                        <div class="rating-overview">
+                            <div class="rating-number">4.8</div>
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <div class="rating-count">Basé sur 124 avis</div>
+                        </div>
+                        <div class="rating-bars">
+                            <div class="rating-bar">
+                                <span>5 étoiles</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 80%;"></div></div>
+                                <span>80%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>4 étoiles</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 15%;"></div></div>
+                                <span>15%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>3 étoiles</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 3%;"></div></div>
+                                <span>3%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>2 étoiles</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 1%;"></div></div>
+                                <span>1%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>1 étoile</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 1%;"></div></div>
+                                <span>1%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-list">
+                        <div class="review-item">
+                            <div class="review-header">
+                                <div class="review-author">
+                                    <div class="review-avatar">MD</div>
+                                    <div>
+                                        <h4>Marie Dupont</h4>
+                                        <span class="review-date">Il y a 2 jours</span>
+                                    </div>
+                                </div>
+                                <div class="review-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="review-content">Excellent produit ! La qualité est au rendez-vous et la livraison a été très rapide. Je recommande vivement.</p>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <div class="review-author">
+                                    <div class="review-avatar">JM</div>
+                                    <div>
+                                        <h4>Jean Martin</h4>
+                                        <span class="review-date">Il y a 1 semaine</span>
+                                    </div>
+                                </div>
+                                <div class="review-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="review-content">Très bon rapport qualité-prix. Le produit correspond parfaitement à la description. Seul petit bémol : le délai de livraison un peu long.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Related Products -->
+        <section class="related-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle">Vous aimerez aussi</span>
+                    <h2 class="section-title">Produits Similaires</h2>
+                </div>
+                <div class="products-grid" id="related-products">
+                    <!-- Will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <a href="index.html" class="footer-logo">
+                            <span class="logo-text">SINJ<span class="logo-accent">3</span></span>
+                        </a>
+                        <p class="footer-description">Votre destination shopping pour des produits tendance et de qualité.</p>
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Liens Rapides</h3>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Accueil</a></li>
+                            <li><a href="products.html">Produits</a></li>
+                            <li><a href="about.html">À Propos</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Aide</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Livraison</a></li>
+                            <li><a href="#">Retours</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Contact</h3>
+                        <ul class="footer-contact">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>123 Rue du Commerce, Paris</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>+33 1 23 45 67 89</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>contact@sinj3.fr</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 SINJ3. Tous droits réservés.</p>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Mon Panier</h3>
+            <button class="cart-close" id="cart-close">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total">0.00 €</span>
+            </div>
+            <a href="cart.html" class="btn btn-primary btn-block">Voir le Panier</a>
+            <a href="checkout.html" class="btn btn-outline btn-block">Commander</a>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = parseInt(urlParams.get('id')) || 1;
+            
+            loadProductDetail(productId);
+            loadRelatedProducts(productId);
+            initTabs();
+        });
+        
+        function loadProductDetail(productId) {
+            const product = getProductById(productId);
+            if (!product) {
+                window.location.href = 'products.html';
+                return;
+            }
+            
+            document.title = `${product.name} - SINJ3`;
+            document.getElementById('breadcrumb-product').textContent = product.name;
+            
+            const badgeClass = product.badge ? `badge-${product.badge}` : '';
+            const badgeText = product.badge === 'new' ? 'Nouveau' : 
+                              product.badge === 'sale' ? 'Promo' : 
+                              product.badge === 'hot' ? 'Tendance' : '';
+            
+            const discount = product.originalPrice ? 
+                Math.round((1 - product.price / product.originalPrice) * 100) : 0;
+            
+            const productDetail = document.getElementById('product-detail');
+            productDetail.innerHTML = `
+                <div class="product-gallery">
+                    <div class="gallery-main">
+                        ${product.badge ? `<span class="gallery-badge ${badgeClass}">${badgeText}</span>` : ''}
+                        <i class="fas fa-tshirt"></i>
+                        <button class="gallery-nav prev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="gallery-nav next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active"><i class="fas fa-tshirt"></i></div>
+                        <div class="gallery-thumb"><i class="fas fa-tshirt"></i></div>
+                        <div class="gallery-thumb"><i class="fas fa-tshirt"></i></div>
+                        <div class="gallery-thumb"><i class="fas fa-tshirt"></i></div>
+                    </div>
+                </div>
+                
+                <div class="product-info-detail">
+                    <span class="product-category-detail">${product.category}</span>
+                    <h1 class="product-title">${product.name}</h1>
+                    
+                    <div class="product-meta">
+                        <div class="product-rating-detail">
+                            <span class="stars">
+                                ${generateStars(product.rating)}
+                            </span>
+                            <span>${product.rating} (${product.reviews} avis)</span>
+                        </div>
+                        <div class="product-stock">
+                            <i class="fas fa-circle"></i>
+                            <span>En stock</span>
+                        </div>
+                    </div>
+                    
+                    <div class="product-price-detail">
+                        <span class="price-current">${product.price.toFixed(2)} €</span>
+                        ${product.originalPrice ? `
+                            <span class="price-original">${product.originalPrice.toFixed(2)} €</span>
+                            <span class="price-discount">-${discount}%</span>
+                        ` : ''}
+                    </div>
+                    
+                    <p class="product-description">${product.description}</p>
+                    
+                    <div class="product-options">
+                        <div class="option-group">
+                            <div class="option-label">
+                                <span>Taille</span>
+                                <a href="#">Guide des tailles</a>
+                            </div>
+                            <div class="size-options">
+                                ${product.sizes.map((size, i) => `
+                                    <button class="size-option ${i === 0 ? 'selected' : ''}">${size}</button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <div class="option-label">
+                                <span>Couleur</span>
+                            </div>
+                            <div class="color-options">
+                                ${product.colors.map((color, i) => {
+                                    const colorMap = {
+                                        'Bleu': '#3b82f6',
+                                        'Noir': '#1f2937',
+                                        'Gris': '#6b7280',
+                                        'Rouge': '#ef4444',
+                                        'Blanc': '#f3f4f6',
+                                        'Rose': '#f472b6',
+                                        'Marron': '#92400e',
+                                        'Beige': '#d4c5a9',
+                                        'Crème': '#fef3c7',
+                                        'Bordeaux': '#7c2d12',
+                                        'Bleu Foncé': '#1e3a8a',
+                                        'Bleu Clair': '#93c5fd',
+                                        'Bleu Marine': '#1e3a5f',
+                                        'Or': '#fbbf24',
+                                        'Or Rose': '#f9a8d4',
+                                        'Argent': '#9ca3af',
+                                        'Écaille': '#92400e',
+                                        'Transparent': 'rgba(0,0,0,0.1)'
+                                    };
+                                    const bgColor = colorMap[color] || '#6b7280';
+                                    return `<button class="color-option ${i === 0 ? 'selected' : ''}" style="background: ${bgColor};" title="${color}"></button>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-actions-detail">
+                        <div class="quantity-selector">
+                            <button type="button" id="qty-minus">-</button>
+                            <input type="number" value="1" min="1" max="10" id="product-qty">
+                            <button type="button" id="qty-plus">+</button>
+                        </div>
+                        <button class="btn btn-primary btn-lg add-to-cart-detail" onclick="addProductToCart(${product.id})">
+                            <i class="fas fa-shopping-cart"></i> Ajouter au panier
+                        </button>
+                    </div>
+                    
+                    <div class="secondary-actions">
+                        <button class="secondary-btn" onclick="toggleWishlist(${product.id})">
+                            <i class="${wishlist.includes(product.id) ? 'fas' : 'far'} fa-heart"></i>
+                            Ajouter aux favoris
+                        </button>
+                        <button class="secondary-btn">
+                            <i class="fas fa-share-alt"></i>
+                            Partager
+                        </button>
+                    </div>
+                    
+                    <div class="product-features">
+                        <div class="feature-item">
+                            <i class="fas fa-truck"></i>
+                            <span>Livraison gratuite dès 50€</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-undo"></i>
+                            <span>Retours gratuits 30 jours</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Paiement sécurisé</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-headset"></i>
+                            <span>Support 24/7</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Update description tab
+            document.getElementById('product-long-description').textContent = product.description + ' Ce produit a été soigneusement sélectionné pour sa qualité exceptionnelle et son design moderne. Idéal pour compléter votre garde-robe et affirmer votre style.';
+            
+            // Update reviews count
+            document.querySelector('[data-tab="reviews"]').textContent = `Avis (${product.reviews})`;
+            
+            // Initialize interactions
+            initProductInteractions();
+        }
+        
+        function initProductInteractions() {
+            // Quantity selector
+            const qtyInput = document.getElementById('product-qty');
+            const qtyMinus = document.getElementById('qty-minus');
+            const qtyPlus = document.getElementById('qty-plus');
+            
+            if (qtyMinus && qtyPlus && qtyInput) {
+                qtyMinus.addEventListener('click', () => {
+                    if (qtyInput.value > 1) qtyInput.value--;
+                });
+                
+                qtyPlus.addEventListener('click', () => {
+                    if (qtyInput.value < 10) qtyInput.value++;
+                });
+            }
+            
+            // Size options
+            document.querySelectorAll('.size-option').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.size-option').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Color options
+            document.querySelectorAll('.color-option').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.color-option').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Thumbnails
+            document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+        
+        function addProductToCart(productId) {
+            const qtyInput = document.getElementById('product-qty');
+            const qty = parseInt(qtyInput?.value) || 1;
+            addToCart(productId, qty);
+        }
+        
+        function loadRelatedProducts(currentProductId) {
+            const currentProduct = getProductById(currentProductId);
+            if (!currentProduct) return;
+            
+            const relatedProducts = products
+                .filter(p => p.id !== currentProductId && p.categorySlug === currentProduct.categorySlug)
+                .slice(0, 4);
+            
+            const container = document.getElementById('related-products');
+            if (relatedProducts.length === 0) {
+                // Show random products if no related ones
+                const randomProducts = products.filter(p => p.id !== currentProductId).slice(0, 4);
+                container.innerHTML = randomProducts.map(p => createProductCard(p)).join('');
+            } else {
+                container.innerHTML = relatedProducts.map(p => createProductCard(p)).join('');
+            }
+        }
+        
+        function initTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn-detail');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(`tab-${tabId}`).classList.add('active');
+                });
+            });
+        }
+    </script>
+</body>
+</html>

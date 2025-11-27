@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Panier - SINJ3</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .cart-page {
+            padding-top: 130px;
+            min-height: 100vh;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            padding: var(--spacing-3xl) 0;
+            text-align: center;
+            color: white;
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            font-size: 0.9375rem;
+        }
+        
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: var(--spacing-2xl);
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .cart-items-container {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .cart-table th {
+            background: var(--bg-secondary);
+            padding: var(--spacing-lg);
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+        
+        .cart-table td {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+        
+        .cart-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .cart-product {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+        
+        .cart-product-image {
+            width: 100px;
+            height: 100px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-product-image i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        
+        .cart-product-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .cart-product-info span {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .cart-price {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .cart-quantity {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .cart-quantity button {
+            width: 35px;
+            height: 35px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+        
+        .cart-quantity button:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .cart-quantity span {
+            width: 50px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .cart-subtotal {
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+        
+        .cart-remove {
+            color: var(--text-light);
+            font-size: 1.25rem;
+            transition: var(--transition-fast);
+        }
+        
+        .cart-remove:hover {
+            color: var(--error-color);
+        }
+        
+        .cart-summary {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-xl);
+            height: fit-content;
+            position: sticky;
+            top: 150px;
+        }
+        
+        .cart-summary h3 {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+            font-size: 0.9375rem;
+        }
+        
+        .summary-row.total {
+            font-size: 1.25rem;
+            font-weight: 700;
+            padding-top: var(--spacing-md);
+            margin-top: var(--spacing-md);
+            border-top: 2px solid var(--border-color);
+        }
+        
+        .summary-row.total span:last-child {
+            color: var(--primary-color);
+        }
+        
+        .promo-code {
+            margin: var(--spacing-xl) 0;
+        }
+        
+        .promo-code label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .promo-code-input {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+        
+        .promo-code-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+        }
+        
+        .promo-code-input button {
+            padding: 0.75rem 1rem;
+            background: var(--bg-dark);
+            color: white;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            transition: var(--transition-fast);
+        }
+        
+        .promo-code-input button:hover {
+            background: var(--primary-color);
+        }
+        
+        .cart-summary .btn {
+            margin-top: var(--spacing-md);
+        }
+        
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-lg);
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .cart-empty-state {
+            text-align: center;
+            padding: var(--spacing-3xl);
+        }
+        
+        .cart-empty-state i {
+            font-size: 5rem;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .cart-empty-state h2 {
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .cart-empty-state p {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .secure-payment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .secure-payment i {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 992px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-summary {
+                position: static;
+            }
+            
+            .cart-table {
+                display: block;
+            }
+            
+            .cart-table thead {
+                display: none;
+            }
+            
+            .cart-table tbody {
+                display: block;
+            }
+            
+            .cart-table tr {
+                display: flex;
+                flex-wrap: wrap;
+                padding: var(--spacing-lg);
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .cart-table td {
+                border: none;
+                padding: var(--spacing-sm);
+            }
+            
+            .cart-table td:first-child {
+                width: 100%;
+            }
+            
+            .cart-product {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="top-bar-content">
+                    <div class="contact-info">
+                        <span><i class="fas fa-phone"></i> +33 1 23 45 67 89</span>
+                        <span><i class="fas fa-envelope"></i> contact@sinj3.fr</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <a href="index.html" class="logo">
+                        <span class="logo-text">SINJ<span class="logo-accent">3</span></span>
+                    </a>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="products.html">Produits</a></li>
+                        <li><a href="about.html">À Propos</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                    <div class="nav-actions">
+                        <a href="#" class="nav-icon" id="wishlist-btn">
+                            <i class="fas fa-heart"></i>
+                            <span class="badge">0</span>
+                        </a>
+                        <a href="cart.html" class="nav-icon active" id="cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge" id="cart-count">0</span>
+                        </a>
+                    </div>
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="cart-page">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="container">
+                <h1>Mon Panier</h1>
+                <nav class="breadcrumb">
+                    <a href="index.html">Accueil</a>
+                    <span>/</span>
+                    <span>Panier</span>
+                </nav>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="cart-layout" id="cart-content">
+                <!-- Cart content will be loaded dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <a href="index.html" class="footer-logo">
+                            <span class="logo-text">SINJ<span class="logo-accent">3</span></span>
+                        </a>
+                        <p class="footer-description">Votre destination shopping pour des produits tendance et de qualité.</p>
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Liens Rapides</h3>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Accueil</a></li>
+                            <li><a href="products.html">Produits</a></li>
+                            <li><a href="about.html">À Propos</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Aide</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Livraison</a></li>
+                            <li><a href="#">Retours</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Contact</h3>
+                        <ul class="footer-contact">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>123 Rue du Commerce, Paris</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>+33 1 23 45 67 89</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>contact@sinj3.fr</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 SINJ3. Tous droits réservés.</p>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCartPage();
+        });
+        
+        function renderCartPage() {
+            const cartContent = document.getElementById('cart-content');
+            
+            if (cart.length === 0) {
+                cartContent.innerHTML = `
+                    <div class="cart-empty-state" style="grid-column: 1 / -1;">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h2>Votre panier est vide</h2>
+                        <p>Découvrez nos produits et ajoutez vos favoris au panier.</p>
+                        <a href="products.html" class="btn btn-primary">Voir les produits</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+            });
+            
+            const shipping = subtotal >= 50 ? 0 : 5.99;
+            const total = subtotal + shipping;
+            
+            cartContent.innerHTML = `
+                <div class="cart-items-container">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Produit</th>
+                                <th>Prix</th>
+                                <th>Quantité</th>
+                                <th>Sous-total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${cart.map(item => `
+                                <tr data-id="${item.id}">
+                                    <td>
+                                        <div class="cart-product">
+                                            <div class="cart-product-image">
+                                                <i class="fas fa-box"></i>
+                                            </div>
+                                            <div class="cart-product-info">
+                                                <h4>${item.name}</h4>
+                                                <span>Réf: #${item.id}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="cart-price">${item.price.toFixed(2)} €</td>
+                                    <td>
+                                        <div class="cart-quantity">
+                                            <button onclick="updateQuantity(${item.id}, -1)">-</button>
+                                            <span>${item.quantity}</span>
+                                            <button onclick="updateQuantity(${item.id}, 1)">+</button>
+                                        </div>
+                                    </td>
+                                    <td class="cart-subtotal">${(item.price * item.quantity).toFixed(2)} €</td>
+                                    <td>
+                                        <button class="cart-remove" onclick="removeItem(${item.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <div class="cart-actions">
+                        <a href="products.html" class="btn btn-outline">
+                            <i class="fas fa-arrow-left"></i> Continuer les achats
+                        </a>
+                        <button class="btn btn-outline" onclick="clearCart()">
+                            <i class="fas fa-trash"></i> Vider le panier
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="cart-summary">
+                    <h3>Récapitulatif</h3>
+                    <div class="summary-row">
+                        <span>Sous-total</span>
+                        <span>${subtotal.toFixed(2)} €</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Livraison</span>
+                        <span>${shipping === 0 ? 'Gratuite' : shipping.toFixed(2) + ' €'}</span>
+                    </div>
+                    ${shipping === 0 ? '' : `
+                        <p style="font-size: 0.8125rem; color: var(--accent-color); margin-bottom: var(--spacing-md);">
+                            <i class="fas fa-info-circle"></i> Livraison gratuite à partir de 50€
+                        </p>
+                    `}
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span>${total.toFixed(2)} €</span>
+                    </div>
+                    
+                    <div class="promo-code">
+                        <label>Code promo</label>
+                        <div class="promo-code-input">
+                            <input type="text" placeholder="Entrez votre code">
+                            <button>Appliquer</button>
+                        </div>
+                    </div>
+                    
+                    <a href="checkout.html" class="btn btn-primary btn-block btn-lg">
+                        <i class="fas fa-lock"></i> Passer la commande
+                    </a>
+                    
+                    <div class="secure-payment">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Paiement 100% sécurisé</span>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function updateQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeItem(productId);
+                } else {
+                    saveCart();
+                    updateCartCount();
+                    renderCartPage();
+                }
+            }
+        }
+        
+        function removeItem(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            saveCart();
+            updateCartCount();
+            renderCartPage();
+            showNotification('Produit retiré du panier');
+        }
+        
+        function clearCart() {
+            if (confirm('Êtes-vous sûr de vouloir vider votre panier ?')) {
+                cart = [];
+                saveCart();
+                updateCartCount();
+                renderCartPage();
+                showNotification('Panier vidé');
+            }
+        }
+    </script>
+</body>
+</html>
