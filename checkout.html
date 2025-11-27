@@ -694,9 +694,11 @@
                     cart = [];
                     saveCart();
                     
-                    // Show success message and redirect
-                    alert('Commande confirmée ! Merci pour votre achat.');
-                    window.location.href = 'index.html';
+                    // Show success notification and redirect
+                    showNotification('Commande confirmée ! Merci pour votre achat.');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
                 }, 2000);
             });
         }
