@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Produits - SINJ3</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .products-page {
+            padding-top: 130px;
+            min-height: 100vh;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            padding: var(--spacing-3xl) 0;
+            text-align: center;
+            color: white;
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            font-size: 0.9375rem;
+        }
+        
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .breadcrumb a:hover {
+            color: white;
+        }
+        
+        .products-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--spacing-2xl);
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .filters-sidebar {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            height: fit-content;
+            position: sticky;
+            top: 150px;
+        }
+        
+        .filter-group {
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-xl);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .filter-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .filter-group h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .filter-group h3 i {
+            font-size: 0.75rem;
+            transition: var(--transition-fast);
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            cursor: pointer;
+        }
+        
+        .filter-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+        
+        .filter-option label {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        
+        .price-range {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+        
+        .price-input {
+            flex: 1;
+        }
+        
+        .price-input input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+        }
+        
+        .price-input label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+        
+        .products-content {
+            min-width: 0;
+        }
+        
+        .products-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+        }
+        
+        .results-count {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+        
+        .toolbar-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+        
+        .sort-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.9375rem;
+            background: var(--bg-primary);
+            cursor: pointer;
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+        
+        .view-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+        }
+        
+        .view-btn:hover,
+        .view-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .all-products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xl);
+        }
+        
+        .all-products-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+        
+        .all-products-grid.list-view .product-card {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+        }
+        
+        .all-products-grid.list-view .product-image {
+            height: 200px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-3xl);
+        }
+        
+        .page-btn {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            transition: var(--transition-fast);
+        }
+        
+        .page-btn:hover,
+        .page-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .mobile-filter-btn {
+            display: none;
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        @media (max-width: 992px) {
+            .products-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-sidebar {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 2000;
+                border-radius: 0;
+                overflow-y: auto;
+                padding-top: 60px;
+            }
+            
+            .filters-sidebar.active {
+                display: block;
+            }
+            
+            .mobile-filter-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: var(--spacing-sm);
+            }
+            
+            .all-products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .all-products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-toolbar {
+                flex-direction: column;
+                gap: var(--spacing-md);
+                align-items: stretch;
+            }
+            
+            .toolbar-actions {
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="top-bar-content">
+                    <div class="contact-info">
+                        <span><i class="fas fa-phone"></i> +33 1 23 45 67 89</span>
+                        <span><i class="fas fa-envelope"></i> contact@sinj3.fr</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <a href="index.html" class="logo">
+                        <span class="logo-text">SINJ<span class="logo-accent">3</span></span>
+                    </a>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="products.html" class="active">Produits</a></li>
+                        <li><a href="about.html">À Propos</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                    <div class="nav-actions">
+                        <div class="search-box">
+                            <input type="text" placeholder="Rechercher..." id="search-input">
+                            <button type="button"><i class="fas fa-search"></i></button>
+                        </div>
+                        <a href="#" class="nav-icon" id="wishlist-btn">
+                            <i class="fas fa-heart"></i>
+                            <span class="badge">0</span>
+                        </a>
+                        <a href="cart.html" class="nav-icon" id="cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge" id="cart-count">0</span>
+                        </a>
+                    </div>
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="products-page">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="container">
+                <h1>Nos Produits</h1>
+                <nav class="breadcrumb">
+                    <a href="index.html">Accueil</a>
+                    <span>/</span>
+                    <span>Produits</span>
+                </nav>
+            </div>
+        </div>
+
+        <div class="container">
+            <button class="mobile-filter-btn" id="mobile-filter-btn">
+                <i class="fas fa-filter"></i> Filtres
+            </button>
+            
+            <div class="products-layout">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar" id="filters-sidebar">
+                    <div class="filter-group">
+                        <h3>Catégories <i class="fas fa-chevron-down"></i></h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="cat-femme" value="femme">
+                                <label for="cat-femme">Mode Femme</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="cat-homme" value="homme">
+                                <label for="cat-homme">Mode Homme</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="cat-accessoires" value="accessoires">
+                                <label for="cat-accessoires">Accessoires</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="cat-chaussures" value="chaussures">
+                                <label for="cat-chaussures">Chaussures</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Prix <i class="fas fa-chevron-down"></i></h3>
+                        <div class="price-range">
+                            <div class="price-input">
+                                <label>Min</label>
+                                <input type="number" id="min-price" placeholder="0€">
+                            </div>
+                            <span>-</span>
+                            <div class="price-input">
+                                <label>Max</label>
+                                <input type="number" id="max-price" placeholder="500€">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Disponibilité <i class="fas fa-chevron-down"></i></h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="promo" value="promo">
+                                <label for="promo">En promotion</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="new" value="new">
+                                <label for="new">Nouveautés</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="bestseller" value="bestseller">
+                                <label for="bestseller">Best-sellers</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Note <i class="fas fa-chevron-down"></i></h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="rating-5" value="5">
+                                <label for="rating-5">
+                                    <i class="fas fa-star" style="color: var(--secondary-color);"></i>
+                                    <i class="fas fa-star" style="color: var(--secondary-color);"></i>
+                                    <i class="fas fa-star" style="color: var(--secondary-color);"></i>
+                                    <i class="fas fa-star" style="color: var(--secondary-color);"></i>
+                                    <i class="fas fa-star" style="color: var(--secondary-color);"></i>
+                                </label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="rating-4" value="4">
+                                <label for="rating-4">
+                                    <i class="fas fa-star" style="color: var(--secondary-color);"></i>
+                                    <i class="fas fa-star" style="color: var(--secondary-color);"></i>
+                                    <i class="fas fa-star" style="color: var(--secondary-color);"></i>
+                                    <i class="fas fa-star" style="color: var(--secondary-color);"></i>
+                                    <i class="far fa-star" style="color: var(--secondary-color);"></i>
+                                    & plus
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" id="apply-filters">Appliquer les filtres</button>
+                    <button class="btn btn-outline btn-block" id="reset-filters" style="margin-top: 0.5rem;">Réinitialiser</button>
+                </aside>
+
+                <!-- Products Content -->
+                <div class="products-content">
+                    <div class="products-toolbar">
+                        <span class="results-count" id="results-count">12 produits trouvés</span>
+                        <div class="toolbar-actions">
+                            <select class="sort-select" id="sort-select">
+                                <option value="">Trier par</option>
+                                <option value="price-low">Prix croissant</option>
+                                <option value="price-high">Prix décroissant</option>
+                                <option value="rating">Meilleures notes</option>
+                                <option value="newest">Nouveautés</option>
+                            </select>
+                            <div class="view-toggle">
+                                <button class="view-btn active" data-view="grid"><i class="fas fa-th"></i></button>
+                                <button class="view-btn" data-view="list"><i class="fas fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="all-products-grid" id="products-grid">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+
+                    <div class="pagination">
+                        <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <a href="index.html" class="footer-logo">
+                            <span class="logo-text">SINJ<span class="logo-accent">3</span></span>
+                        </a>
+                        <p class="footer-description">Votre destination shopping pour des produits tendance et de qualité.</p>
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Liens Rapides</h3>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Accueil</a></li>
+                            <li><a href="products.html">Produits</a></li>
+                            <li><a href="about.html">À Propos</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Aide</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Livraison</a></li>
+                            <li><a href="#">Retours</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Contact</h3>
+                        <ul class="footer-contact">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>123 Rue du Commerce, Paris</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>+33 1 23 45 67 89</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>contact@sinj3.fr</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 SINJ3. Tous droits réservés.</p>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Mon Panier</h3>
+            <button class="cart-close" id="cart-close">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total">0.00 €</span>
+            </div>
+            <a href="cart.html" class="btn btn-primary btn-block">Voir le Panier</a>
+            <a href="checkout.html" class="btn btn-outline btn-block">Commander</a>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const productsGrid = document.getElementById('products-grid');
+            const resultsCount = document.getElementById('results-count');
+            const sortSelect = document.getElementById('sort-select');
+            const viewBtns = document.querySelectorAll('.view-btn');
+            const mobileFilterBtn = document.getElementById('mobile-filter-btn');
+            const filtersSidebar = document.getElementById('filters-sidebar');
+            
+            let currentProducts = [...products];
+            
+            // Initial render
+            renderProducts(currentProducts);
+            
+            // Sort functionality
+            sortSelect.addEventListener('change', function() {
+                currentProducts = sortProducts(currentProducts, this.value);
+                renderProducts(currentProducts);
+            });
+            
+            // View toggle
+            viewBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    viewBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    if (this.dataset.view === 'list') {
+                        productsGrid.classList.add('list-view');
+                    } else {
+                        productsGrid.classList.remove('list-view');
+                    }
+                });
+            });
+            
+            // Mobile filter toggle
+            if (mobileFilterBtn) {
+                mobileFilterBtn.addEventListener('click', function() {
+                    filtersSidebar.classList.toggle('active');
+                });
+            }
+            
+            // Apply filters
+            document.getElementById('apply-filters').addEventListener('click', applyFilters);
+            document.getElementById('reset-filters').addEventListener('click', resetFilters);
+            
+            function applyFilters() {
+                let filtered = [...products];
+                
+                // Category filter
+                const selectedCategories = [];
+                document.querySelectorAll('.filter-option input[type="checkbox"]:checked').forEach(cb => {
+                    if (cb.id.startsWith('cat-')) {
+                        selectedCategories.push(cb.value);
+                    }
+                });
+                
+                if (selectedCategories.length > 0) {
+                    filtered = filtered.filter(p => selectedCategories.includes(p.categorySlug));
+                }
+                
+                // Price filter
+                const minPrice = parseFloat(document.getElementById('min-price').value) || 0;
+                const maxPrice = parseFloat(document.getElementById('max-price').value) || Infinity;
+                filtered = filtered.filter(p => p.price >= minPrice && p.price <= maxPrice);
+                
+                // Availability filters
+                if (document.getElementById('promo').checked) {
+                    filtered = filtered.filter(p => p.originalPrice);
+                }
+                if (document.getElementById('new').checked) {
+                    filtered = filtered.filter(p => p.isNew);
+                }
+                if (document.getElementById('bestseller').checked) {
+                    filtered = filtered.filter(p => p.isBestseller);
+                }
+                
+                currentProducts = filtered;
+                renderProducts(currentProducts);
+                
+                // Close mobile filters
+                if (filtersSidebar.classList.contains('active')) {
+                    filtersSidebar.classList.remove('active');
+                }
+            }
+            
+            function resetFilters() {
+                document.querySelectorAll('.filter-option input[type="checkbox"]').forEach(cb => {
+                    cb.checked = false;
+                });
+                document.getElementById('min-price').value = '';
+                document.getElementById('max-price').value = '';
+                currentProducts = [...products];
+                renderProducts(currentProducts);
+            }
+            
+            function renderProducts(productList) {
+                productsGrid.innerHTML = productList.map(product => createProductCard(product)).join('');
+                resultsCount.textContent = `${productList.length} produit${productList.length > 1 ? 's' : ''} trouvé${productList.length > 1 ? 's' : ''}`;
+            }
+            
+            // Check URL params for initial filter
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+            const searchParam = urlParams.get('search');
+            const promoParam = urlParams.get('promo');
+            
+            if (categoryParam) {
+                const checkbox = document.getElementById(`cat-${categoryParam}`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                    applyFilters();
+                }
+            }
+            
+            if (searchParam) {
+                currentProducts = searchProducts(searchParam);
+                renderProducts(currentProducts);
+            }
+            
+            if (promoParam === 'true') {
+                document.getElementById('promo').checked = true;
+                applyFilters();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SINJ3 - Boutique en Ligne</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="top-bar-content">
+                    <div class="contact-info">
+                        <span><i class="fas fa-phone"></i> +33 1 23 45 67 89</span>
+                        <span><i class="fas fa-envelope"></i> contact@sinj3.fr</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <a href="index.html" class="logo">
+                        <span class="logo-text">SINJ<span class="logo-accent">3</span></span>
+                    </a>
+                    <ul class="nav-links">
+                        <li><a href="index.html" class="active">Accueil</a></li>
+                        <li><a href="products.html">Produits</a></li>
+                        <li><a href="about.html">À Propos</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                    <div class="nav-actions">
+                        <div class="search-box">
+                            <input type="text" placeholder="Rechercher..." id="search-input">
+                            <button type="button"><i class="fas fa-search"></i></button>
+                        </div>
+                        <a href="#" class="nav-icon" id="wishlist-btn">
+                            <i class="fas fa-heart"></i>
+                            <span class="badge">0</span>
+                        </a>
+                        <a href="cart.html" class="nav-icon" id="cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge" id="cart-count">0</span>
+                        </a>
+                        <a href="#" class="nav-icon" id="user-btn">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </div>
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-slider">
+            <div class="hero-slide active">
+                <div class="hero-content">
+                    <span class="hero-subtitle">Nouvelle Collection 2024</span>
+                    <h1 class="hero-title">Découvrez Notre<br>Style Unique</h1>
+                    <p class="hero-description">Explorez notre sélection exclusive de produits tendance et de qualité supérieure.</p>
+                    <div class="hero-buttons">
+                        <a href="products.html" class="btn btn-primary">Voir la Collection</a>
+                        <a href="#featured" class="btn btn-outline">En Savoir Plus</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-shape"></div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-indicators">
+            <span class="indicator active"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Livraison Gratuite</h3>
+                    <p>Pour toute commande supérieure à 50€</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Paiement Sécurisé</h3>
+                    <p>Transaction 100% sécurisée</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <h3>Retours Gratuits</h3>
+                    <p>30 jours pour changer d'avis</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Support 24/7</h3>
+                    <p>Une équipe à votre écoute</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Explorez</span>
+                <h2 class="section-title">Nos Catégories</h2>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card category-large">
+                    <div class="category-overlay">
+                        <div class="category-content">
+                            <h3>Mode Femme</h3>
+                            <p>150+ produits</p>
+                            <a href="products.html?category=femme" class="btn btn-white">Explorer</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-overlay">
+                        <div class="category-content">
+                            <h3>Mode Homme</h3>
+                            <p>120+ produits</p>
+                            <a href="products.html?category=homme" class="btn btn-white">Explorer</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-overlay">
+                        <div class="category-content">
+                            <h3>Accessoires</h3>
+                            <p>80+ produits</p>
+                            <a href="products.html?category=accessoires" class="btn btn-white">Explorer</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-card category-wide">
+                    <div class="category-overlay">
+                        <div class="category-content">
+                            <h3>Nouveautés</h3>
+                            <p>Découvrez les dernières tendances</p>
+                            <a href="products.html?category=nouveautes" class="btn btn-white">Explorer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products" id="featured">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Nos Best-Sellers</span>
+                <h2 class="section-title">Produits Populaires</h2>
+            </div>
+            <div class="products-tabs">
+                <button class="tab-btn active" data-tab="all">Tous</button>
+                <button class="tab-btn" data-tab="nouveautes">Nouveautés</button>
+                <button class="tab-btn" data-tab="promos">Promotions</button>
+                <button class="tab-btn" data-tab="bestsellers">Best-Sellers</button>
+            </div>
+            <div class="products-grid" id="featured-products">
+                <!-- Products will be loaded dynamically -->
+            </div>
+            <div class="section-footer">
+                <a href="products.html" class="btn btn-primary">Voir Tous les Produits</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner Section -->
+    <section class="promo-banner">
+        <div class="container">
+            <div class="banner-content">
+                <div class="banner-text">
+                    <span class="banner-label">Offre Spéciale</span>
+                    <h2>Jusqu'à <span class="highlight">50%</span> de Réduction</h2>
+                    <p>Sur une sélection de produits. Offre limitée !</p>
+                    <div class="countdown" id="countdown">
+                        <div class="countdown-item">
+                            <span class="count-value" id="days">00</span>
+                            <span class="count-label">Jours</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="count-value" id="hours">00</span>
+                            <span class="count-label">Heures</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="count-value" id="minutes">00</span>
+                            <span class="count-label">Minutes</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="count-value" id="seconds">00</span>
+                            <span class="count-label">Secondes</span>
+                        </div>
+                    </div>
+                    <a href="products.html?promo=true" class="btn btn-primary btn-lg">Profiter de l'Offre</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals -->
+    <section class="new-arrivals">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Fraîchement Arrivés</span>
+                <h2 class="section-title">Nouvelles Arrivées</h2>
+            </div>
+            <div class="arrivals-slider">
+                <div class="arrivals-track" id="arrivals-track">
+                    <!-- Products will be loaded dynamically -->
+                </div>
+                <button class="slider-btn prev" id="arrivals-prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next" id="arrivals-next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Avis Clients</span>
+                <h2 class="section-title">Ce Que Disent Nos Clients</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Service impeccable et produits de qualité ! Je recommande vivement cette boutique. Livraison rapide et emballage soigné."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Marie Dupont</h4>
+                            <span>Cliente vérifiée</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Excellent rapport qualité-prix. J'ai commandé plusieurs fois et je n'ai jamais été déçu. Le service client est très réactif."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Jean Martin</h4>
+                            <span>Client vérifié</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text">"Des produits tendance et originaux. J'adore parcourir leur collection. La navigation sur le site est très agréable."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Sophie Bernard</h4>
+                            <span>Cliente vérifiée</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2>Restez Informé</h2>
+                    <p>Inscrivez-vous à notre newsletter pour recevoir nos offres exclusives et les dernières nouveautés.</p>
+                </div>
+                <form class="newsletter-form" id="newsletter-form">
+                    <input type="email" placeholder="Votre adresse email" required>
+                    <button type="submit" class="btn btn-primary">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Feed -->
+    <section class="instagram-feed">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">@sinj3_boutique</span>
+                <h2 class="section-title">Suivez-Nous sur Instagram</h2>
+            </div>
+            <div class="instagram-grid">
+                <div class="instagram-item">
+                    <div class="instagram-overlay">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+                <div class="instagram-item">
+                    <div class="instagram-overlay">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+                <div class="instagram-item">
+                    <div class="instagram-overlay">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+                <div class="instagram-item">
+                    <div class="instagram-overlay">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+                <div class="instagram-item">
+                    <div class="instagram-overlay">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+                <div class="instagram-item">
+                    <div class="instagram-overlay">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <a href="index.html" class="footer-logo">
+                            <span class="logo-text">SINJ<span class="logo-accent">3</span></span>
+                        </a>
+                        <p class="footer-description">Votre destination shopping pour des produits tendance et de qualité. Découvrez notre collection unique.</p>
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Liens Rapides</h3>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Accueil</a></li>
+                            <li><a href="products.html">Produits</a></li>
+                            <li><a href="about.html">À Propos</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Aide & Info</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Suivre ma commande</a></li>
+                            <li><a href="#">Politique de retour</a></li>
+                            <li><a href="#">Livraison</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Conditions générales</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Contact</h3>
+                        <ul class="footer-contact">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>123 Rue du Commerce<br>75001 Paris, France</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>+33 1 23 45 67 89</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>contact@sinj3.fr</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 SINJ3. Tous droits réservés.</p>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                        <i class="fab fa-cc-apple-pay"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Quick View Modal -->
+    <div class="modal" id="quick-view-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <div class="modal-body" id="modal-body">
+                <!-- Quick view content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Mon Panier</h3>
+            <button class="cart-close" id="cart-close">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be loaded dynamically -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total">0.00 €</span>
+            </div>
+            <a href="cart.html" class="btn btn-primary btn-block">Voir le Panier</a>
+            <a href="checkout.html" class="btn btn-outline btn-block">Commander</a>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
